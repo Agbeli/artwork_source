@@ -33,7 +33,7 @@ class LogTransformer(TransformerMixin,BaseEstimator):
         for variable in self.variables:
             X[variable] = np.log(X[variable])
         
-        return X  
+        return X 
 
 
 class DropFeature(TransformerMixin,BaseEstimator):
@@ -116,14 +116,13 @@ class RareImputation(TransformerMixin,BaseEstimator):
     def fit(self,X,y=None):
 
         X.copy()
-        y = y.copy()
 
         self.find_frequent_list = {}
 
         for variable in self.variables:
 
-            temp = X.grouby(variable)[y].size() / X.shape[0]
-            self.find_frequent_list[variable] = temp[temp>self.rate].index
+            temp = pd.Series(X[variable].value_counts() / np.float(X.shape[0]))
+            self.find_frequent_list[variable] = list(temp[temp>self.rate].index)
 
         return self 
 
@@ -152,7 +151,7 @@ class ScaleFeatues(TransformerMixin,BaseEstimator):
 
             self.variables = variables
 
-    def fit(X,y=None):
+    def fit(self,X,y=None):
 
         X = X.copy()
 
