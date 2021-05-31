@@ -94,6 +94,54 @@ class FrequencyEncoding(TransformerMixin,BaseEstimator):
         return X 
 
 
+class FindFrequentLabels(TransformerMixin,BaseEstimator):
+
+    """
+    Args:
+        Input: lists of variables
+        rate : rate of frequency of labels in a given feature.   
+
+    """
+
+    def __init__(self,variables,rate=0.001):
+
+        self.rate = rate 
+        if not isinstance(variables,list):
+
+            self.variables = [variables]
+        else:
+            self.variables = variables
+
+    def fit(self,X,y=None):
+
+        X.copy()
+        y = y.copy()
+
+        self.find_frequent_list = {}
+
+        for variable in self.variables:
+
+            temp = X.grouby(variable)[y].size() / X.shape[0]
+            self.find_frequent_list[variable] = temp[temp>self.rate].index
+
+        return self 
+
+    def transform(self,X):
+
+        X = X.copy()
+
+        for variable in self.variables:
+
+            X[variable] = np.where(X[variable].isin(self.find_frequent_list[variable]),X[variable],"Rare")
+
+        return X
+
+
+        
+
+
+
+
 
 
 
