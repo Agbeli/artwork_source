@@ -2,6 +2,7 @@
 import numpy as np
 import pandas as pd
 from sklearn.base import TransformerMixin,BaseEstimator
+from sklearn.preprocessing import StandardScaler
 
 
 
@@ -94,7 +95,7 @@ class FrequencyEncoding(TransformerMixin,BaseEstimator):
         return X 
 
 
-class FindFrequentLabels(TransformerMixin,BaseEstimator):
+class RareImputation(TransformerMixin,BaseEstimator):
 
     """
     Args:
@@ -137,7 +138,42 @@ class FindFrequentLabels(TransformerMixin,BaseEstimator):
         return X
 
 
-        
+
+class ScaleFeatues(TransformerMixin,BaseEstimator):
+
+
+    def __init__(self,variables):
+
+        if not isinstance(variables,list):
+
+            self.variables = variables
+
+        else:
+
+            self.variables = variables
+
+    def fit(X,y=None):
+
+        X = X.copy()
+
+        self.scale = {}
+        for variable in self.variables:
+            scalar = StandardScaler()
+            self.scale[variable] = scalar.fit(X[variable])
+
+        return self
+
+    def transform(self,X):
+
+        X = X.copy()
+
+        for variable in self.variables:
+
+            X[variable] = self.scale[variable].transform(X[[variable]]) 
+
+        return X  
+
+
 
 
 
