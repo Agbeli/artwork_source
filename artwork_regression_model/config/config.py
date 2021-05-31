@@ -27,7 +27,7 @@ FLOAT_FEATURES = ["cm_y","cm_x"]
 
 DROP_FEATURES = ["index","year_sold","year_made"]
 
-PIPELINE_FILE_NAME = "credit_model"
+PIPELINE_FILE_NAME = "artwork_regression_model"
 PIPELINE_SAVE_FILE = f"{PIPELINE_FILE_NAME}_output"
 
 

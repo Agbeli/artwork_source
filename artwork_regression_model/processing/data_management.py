@@ -48,10 +48,10 @@ def remove_old_pipeline(*,files_to_keep:t.List[str])->None:
 
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 
-    data = load_data(file_name=config.DATA_FILE)
-    print(data.head())
+#     data = load_data(file_name=config.DATA_FILE)
+#     print(data.head())
 
 
 
