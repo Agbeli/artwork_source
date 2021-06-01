@@ -25,6 +25,7 @@ class LogTransformer(TransformerMixin,BaseEstimator):
             self.variables = variables
 
     def fit(self,X,y=None):
+        ### nothing to learn from the train set of the data. 
         return self 
 
     def transform(self,X=None):
@@ -80,6 +81,7 @@ class FrequencyEncoding(TransformerMixin,BaseEstimator):
 
     def fit(self,X,y=None):
 
+        ### learn categorical frequency in the train data. 
         X = X.copy()
         self.val_encode = {}
         for val in self.variables:
@@ -174,7 +176,39 @@ class ScaleFeatues(TransformerMixin,BaseEstimator):
 
 
 
+class OutlierCapping(TransformerMixin,BaseEstimator):
 
+    def __init__(self,variables):
+
+        if not isinstance(variables,list):
+
+            self.variables = variables
+        
+        else:
+            self.variables = variables
+
+
+    def fit(self,X,y = None):
+
+        X = X.copy()
+        self.features_capping = {}   ### store the lower and upper bound of each floating feature 
+        for variable in self.variables:
+            self.features_capping[variable] = (X[variable].quantile(0.1),X[variable].quantile(0.9))
+
+        return self 
+
+    def transform(self,X):
+
+        X = X.copy()
+
+        for variable in self.variables:
+
+            X[variable] = np.where(X[variable] > self.features_capping[variable][1],self.features_capping[variable][1],X[variable])
+            X[variable] = np.where(X[variable] < self.features_capping[variable][0],self.features_capping[variable][0],X[variable])
+        return X 
+
+
+            
 
 
 
