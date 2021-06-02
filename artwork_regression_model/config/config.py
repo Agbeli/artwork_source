@@ -23,7 +23,7 @@ TARGET = "price_usd"
 
 CATEGORICAL_FEATURES =  ["artist","country","country_group","artwork", "type","auction_house","auction_location"]
 
-FLOAT_FEATURES = ["cm_y","cm_x"]
+FLOAT_FEATURES = ["cm_x","cm_y"]
 
 NUMERIC_FEATURES = ["month_sold"]
 

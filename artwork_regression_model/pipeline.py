@@ -1,5 +1,5 @@
 from sklearn.pipeline import Pipeline,FeatureUnion
-from catboost import CatboostRegressor
+from catboost import CatBoostRegressor
 
 
 ### custom modules 
@@ -40,6 +40,6 @@ UnionFeature = FeatureUnion(
 
 model_pipeline = Pipeline([
                             ("union", UnionFeature), 
-                            ("catboost_model",CatboostRegressor( learning_rate = 0.1, iteration = 250, l2_leaf_reg = 0.5, depth = 10,
-                            cat_features=config.CATEGORICAL_FEATURES,random_state=110,silent=True))
+                            ("catboost_model",CatBoostRegressor( learning_rate = 0.1, iterations = 250, l2_leaf_reg = 0.5, depth = 10,
+                            cat_features=config.CATEGORICAL_FEATURES,random_state=110,silent=True,))
                           ])
