@@ -62,6 +62,7 @@ class DropFeature(TransformerMixin,BaseEstimator):
         X = X.copy()
 
         X = X.drop(self.variables,axis=1)
+        
         return X 
 
 
@@ -82,7 +83,7 @@ class FrequencyEncoding(TransformerMixin,BaseEstimator):
     def fit(self,X,y=None):
 
         ### learn categorical frequency in the train data. 
-        X = X.copy()
+        
         self.val_encode = {}
         for val in self.variables:
             self.val_encode[val] = X[val].value_counts()
@@ -117,8 +118,6 @@ class RareImputation(TransformerMixin,BaseEstimator):
 
     def fit(self,X,y=None):
 
-        X.copy()
-
         self.find_frequent_list = {}
 
         for variable in self.variables:
@@ -147,7 +146,7 @@ class ScaleFeatues(TransformerMixin,BaseEstimator):
 
         if not isinstance(variables,list):
 
-            self.variables = variables
+            self.variables = [variables]
 
         else:
 
@@ -155,12 +154,11 @@ class ScaleFeatues(TransformerMixin,BaseEstimator):
 
     def fit(self,X,y=None):
 
-        X = X.copy()
-
+        
         self.scale = {}
         for variable in self.variables:
             scalar = StandardScaler()
-            self.scale[variable] = scalar.fit(X[variable])
+            self.scale[variable] = scalar.fit(X[[variable]])
 
         return self
 
@@ -190,7 +188,7 @@ class OutlierCapping(TransformerMixin,BaseEstimator):
 
     def fit(self,X,y = None):
 
-        X = X.copy()
+        
         self.features_capping = {}   ### store the lower and upper bound of each floating feature 
         for variable in self.variables:
             self.features_capping[variable] = (X[variable].quantile(0.1),X[variable].quantile(0.9))
@@ -205,7 +203,26 @@ class OutlierCapping(TransformerMixin,BaseEstimator):
 
             X[variable] = np.where(X[variable] > self.features_capping[variable][1],self.features_capping[variable][1],X[variable])
             X[variable] = np.where(X[variable] < self.features_capping[variable][0],self.features_capping[variable][0],X[variable])
+
         return X 
+
+
+def targetCapping(y):
+
+    y_ = y.copy()
+
+    lower_bound = y.quantile(0.1)
+    upper_bound = y.quantile(0.9)
+
+    y_ = np.where(y_ < lower_bound, lower_bound, y_)
+    y_ = np.where(y_ > upper_bound, upper_bound, y_)
+
+    return y_ 
+
+
+
+
+
 
 
             

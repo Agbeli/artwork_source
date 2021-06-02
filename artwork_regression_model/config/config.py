@@ -25,16 +25,20 @@ CATEGORICAL_FEATURES =  ["artist","country","country_group","artwork", "type","a
 
 FLOAT_FEATURES = ["cm_y","cm_x"]
 
+NUMERIC_FEATURES = ["month_sold"]
+
+SCALE_FEATURES = ["cm_x","cm_y","month_sold"]
+
 DROP_FEATURES = ["index","year_sold","year_made"]
 
 PIPELINE_FILE_NAME = "artwork_regression_model"
 PIPELINE_SAVE_FILE = f"{PIPELINE_FILE_NAME}_output"
 
 
-if __name__ == "__main__":
-    print(f"This is parent path \n \t \t {PACKAGE_ROOT}")
-    dataset = pd.read_csv(DATASET_DIR/DATA_FILE)
-    print(dataset.shape)
+# if __name__ == "__main__":
+#     print(f"This is parent path \n \t \t {PACKAGE_ROOT}")
+#     dataset = pd.read_csv(DATASET_DIR/DATA_FILE)
+#     print(dataset.shape)
 
 
 
