@@ -209,13 +209,11 @@ class OutlierCapping(TransformerMixin,BaseEstimator):
 
 def targetCapping(y):
 
-    y_ = y.copy()
-
     lower_bound = y.quantile(0.1)
     upper_bound = y.quantile(0.9)
 
-    y_ = np.where(y_ < lower_bound, lower_bound, y_)
-    y_ = np.where(y_ > upper_bound, upper_bound, y_)
+    y_ = np.where(y < lower_bound, lower_bound, y)
+    y_ = np.where(y > upper_bound, upper_bound, y)
 
     return y_ 
 

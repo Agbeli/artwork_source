@@ -8,6 +8,7 @@ import logging
 from artwork_regression_model.processing import data_management,preprocessors as pp 
 from artwork_regression_model.processing.data_management import save_pipeline,load_data
 from artwork_regression_model import pipeline
+from artwork_regression_model.pipeline import model_pipeline
 from artwork_regression_model.config import config
 
 
@@ -23,10 +24,16 @@ def run_training()->None:
 
     trainset = load_data(file_name = config.DATA_FILE)
     xtrainset, ytrainset = trainset[config.FEATURES] , trainset[config.TARGET]
+    ytrainset = pp.targetCapping(ytrainset)
+
+    
+    model_pipeline.fit(X = xtrainset,y = ytrainset)
+    print("**** Successful *****")
+
+    
 
     print("Nature of dataset:  \n")
-    print(xtrainset.head(),"\n")
-    print(ytrainset.head())
+    print(xtrainset.columns,"\n")
 
 
 if __name__ == "__main__":

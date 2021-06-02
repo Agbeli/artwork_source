@@ -19,9 +19,11 @@ FEATURES = ["index","artist", "country","country_group", "artwork", "type",
        "auction_house", "auction_location", "cm_x", "cm_y", "year_sold",
        "month_sold", "year_made"]
 
-TARGET = "price_usd"
+TARGET = ["price_usd"]
 
 CATEGORICAL_FEATURES =  ["artist","country","country_group","artwork", "type","auction_house","auction_location"]
+
+SELECTED_FEATURES = ["artist","country","country_group","artwork", "type","auction_house","auction_location","cm_x","cm_y","month_sold"]
 
 FLOAT_FEATURES = ["cm_x","cm_y"]
 
