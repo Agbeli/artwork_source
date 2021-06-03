@@ -36,5 +36,7 @@ if __name__ == '__main__':
     Xtest = data_[config.FEATURES]
     preds = _model.predict(Xtest)
     target = pp.targetCapping(data_[config.TARGET])
-    from sklearn.metrics import r2_score
-    print("Check r2 score: ",r2_score(preds,target))
+    from sklearn.metrics import r2_score,mean_squared_error as mse, mean_absolute_error as mae 
+    print(f"Check r2 score: \n \t \t {r2_score(preds,target):.2f} \n")
+    print(f"check mean square error: \n \t \t {np.sqrt(mse(preds,target))} \n")
+    print(f"check mean absolute error: \n \t \t {mae(preds,target)} \n")
