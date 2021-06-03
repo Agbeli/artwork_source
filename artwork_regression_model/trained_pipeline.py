@@ -22,18 +22,13 @@ logger = logging.getLogger(__name__)
 
 def run_training()->None:
 
+
     trainset = load_data(file_name = config.DATA_FILE)
     xtrainset, ytrainset = trainset[config.FEATURES] , trainset[config.TARGET]
     ytrainset = pp.targetCapping(ytrainset)
-
     
     model_pipeline.fit(X = xtrainset,y = ytrainset)
-    print("**** Successful *****")
-
-    
-
-    print("Nature of dataset:  \n")
-    print(xtrainset.columns,"\n")
+    save_pipeline(pipeline_to_persist=model_pipeline)
 
 
 if __name__ == "__main__":

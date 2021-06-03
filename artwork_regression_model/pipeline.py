@@ -13,11 +13,8 @@ from artwork_regression_model.config import  config
 import logging as logging
 
 
-categorical_features = config.CATEGORICAL_FEATURES
 
-class CustomSelectionFeature(SelectFromModel):
-
-    pass  
+ 
 
 class CustomCatboostRegressor(CatBoostRegressor):
 
@@ -26,11 +23,12 @@ class CustomCatboostRegressor(CatBoostRegressor):
         dataframe = pd.DataFrame(X)
         dataframe = dataframe.infer_objects()
         cat_features_new = [dataframe.columns.get_loc(col) for col in dataframe.select_dtypes(include=['object', 'bool']).columns]
-        print(cat_features_new)
+        # print(cat_features_new)
 
         return super().fit(X ,y = y,cat_features=cat_features_new,**fit_params)
 
 
+### feature engineering pipeline for transforming the various features in the dataframe 
 UnionFeature = FeatureUnion(
     [
         (
@@ -58,7 +56,8 @@ UnionFeature = FeatureUnion(
         ])
 
 
-List = list(range(len(config.CATEGORICAL_FEATURES)))
+
+### combine the feature engineering pipeline with model. 
 model_union = Pipeline([
                             ("union", UnionFeature), 
                             ("catboost_model",CustomCatboostRegressor( learning_rate = 0.1, 
@@ -68,5 +67,5 @@ model_union = Pipeline([
                             random_seed = 110,silent = True))])
 
 
-
+#### transform the target 
 model_pipeline = TransformedTargetRegressor(model_union,func=np.log,inverse_func=np.exp)
