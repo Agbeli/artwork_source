@@ -4,7 +4,7 @@ import json
 
 ################################################################
 from artwork_regression_model.processing.data_management import load_pipeline,load_data
-from artwork_regression_model.processing import preprocessors as pp 
+from artwork_regression_model.processing import preprocessors as pp ,validation
 from artwork_regression_model.config import config
 
 import logging
@@ -21,7 +21,7 @@ _model = load_pipeline(file_name=pipeline_file_name)
 def make_predictions(*,input_data:t.Union[pd.DataFrame,dict])-> dict:
 
     data = pd.DataFrame(input_data)
-
+    data = validation.validate_input(data)  ### validate the data. 
 
     prediction = _model.predict(data)
 
@@ -34,6 +34,8 @@ if __name__ == '__main__':
     ### run test prediction for the model saved 
     data_ = load_data(file_name = config.TESTSET)
     Xtest = data_[config.FEATURES]
+    ytest = data_[config.TARGET]
+    print(f"check the two: {ytest[0:1]}")
     pred = make_predictions(input_data = Xtest[0:1])["price"]
     print(f"price: ${pred[0][0]:.2f}")
     #preds = _model.predict(Xtest)
