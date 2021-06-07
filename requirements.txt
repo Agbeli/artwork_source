@@ -1,8 +1,8 @@
 absl-py==0.11.0
 alabaster==0.7.12
 alembic==1.4.1
-anaconda-client==1.7.2
-anaconda-project==0.8.3
+#anaconda-client==1.7.2
+#anaconda-project==0.8.3
 argh==0.26.2
 Babel==2.8.0
 backcall==0.1.0

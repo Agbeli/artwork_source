@@ -12,10 +12,6 @@ from artwork_regression_model.config import  config
 
 import logging as logging
 
-
-
- 
-
 class CustomCatboostRegressor(CatBoostRegressor):
 
     def fit(self,X,y=None,**fit_params):
@@ -57,12 +53,12 @@ UnionFeature = FeatureUnion(
 
 
 
-### combine the feature engineering pipeline with model. 
+### combine the feature engineering pipeline with model.
 model_union = Pipeline([
-                            ("union", UnionFeature), 
-                            ("catboost_model",CustomCatboostRegressor( learning_rate = 0.1, 
-                            iterations = 250, 
-                            l2_leaf_reg = 0.5, 
+                            ("union", UnionFeature),
+                            ("catboost_model",CustomCatboostRegressor( learning_rate = 0.1,
+                            iterations = 250,
+                            l2_leaf_reg = 0.5,
                             depth = 10,
                             random_seed = 110,silent = True))])
 
